@@ -1,5 +1,5 @@
 //import the model
-import { Http, Response } from "@angular/http";
+import { Http, Response, Headers } from "@angular/http";
 import { Injectable } from "@angular/core";
 import { Message } from "./message.model";
 import 'rxjs/Rx';
@@ -15,8 +15,9 @@ export class MessageService{
   addMessage(message: Message){
     this.messages.push(message);
     const body = JSON.stringify(message);
+    const headers = new Headers ({'Content-Type': 'application/json'});
     //sends up an observable, does not send a request, holds the request
-    return this.http.post('http://localhost:3000/message', body)
+    return this.http.post('http://localhost:3000/message', body, {headers: headers})
       .map((response: Response) => response.json())
      .catch((error: Response) => Observable.throw(error.json()));
   }
