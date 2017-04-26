@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { MessageService } from "./message.service";
 import { Message } from "./message.model";
@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
   selector: 'app-message-input',
   templateUrl: './message-input.component.html'
 })
-export class MessageInputComponent{
+export class MessageInputComponent implements OnInit{
+  message: Message;
+
   constructor(private messageService: MessageService) {}
 
   onSubmit(form: NgForm){
@@ -19,5 +21,12 @@ export class MessageInputComponent{
         error => console.error("Error!", error)
       );
     form.resetForm();
+  }
+
+ //call messageService and subscribe to any events that get emitted
+  ngOnInit(){
+    this.messageService.messageIsEdit.subscribe(
+      (message: Message) => this.message = message
+    )
   }
 }

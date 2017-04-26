@@ -1,6 +1,6 @@
 //import the model
 import { Http, Response, Headers } from "@angular/http";
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { Message } from "./message.model";
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class MessageService{
   private messages: Message[] = [];
+
+  //this will emit an Message object
+  messageIsEdit = new EventEmitter<Message>;
 
   //only able to inject services into classes which have some form of metadeta attached to them
   constructor(private http: Http) {}
@@ -23,7 +26,7 @@ export class MessageService{
   }
 
   getMessages(){
-    return this.http.get('http://localhost:3000/message')
+    return this.http.get('/message')
       .map((response: Response) => {
         const messages = response.json().obj;
 
@@ -36,6 +39,12 @@ export class MessageService{
         return transformedMessages;
       })
     //  .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  //Inform the messageInputComponent that it should load this message into the input in the HTML
+  //this service acts as a middleman between MessageComponent
+  editMessage(message: Message){
+    this.messageIsEdit.emit(message);
   }
 
   deleteMessage(message: Message){
