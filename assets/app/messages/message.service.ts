@@ -29,7 +29,7 @@ export class MessageService{
 
         let transformedMessages: Message[] = [];
         for (let message of messages) {
-          transformedMessages.push(new Message(message.content, message.id, 'Dummy', null));
+          transformedMessages.push(new Message(message.content, 'Dummy', message.id, null));
         }
         this.messages = transformedMessages;
         //subscribing to an Observable so map needs to return something
