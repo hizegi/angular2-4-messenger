@@ -16,13 +16,19 @@ export class MessageService{
   constructor(private http: Http) {}
 
   addMessage(message: Message){
-    this.messages.push(message);
+    //this.messages.push(message);
     const body = JSON.stringify(message);
     const headers = new Headers ({'Content-Type': 'application/json'});
     //sends up an observable, does not send a request, holds the request
     return this.http.post('http://localhost:3000/message', body, {headers: headers})
-      .map((response: Response) => response.json())
-     .catch((error: Response) => Observable.throw(error.json()));
+      .map((response: Response) => {
+        const result = response.json();
+        //sent from backend inside "obj"
+        const message = new Message(result.obj.content, 'Dummy', result.obj._id, null);
+        this.messages.push(message);
+        return message;
+      })
+     .catch((error: Response) => console.log(error));
   }
 
 
@@ -34,7 +40,7 @@ export class MessageService{
 
         let transformedMessages: Message[] = [];
         for (let message of messages) {
-          transformedMessages.push(new Message(message.content, 'Dummy', message.id, null));
+          transformedMessages.push(new Message(message.content, 'Dummy', message._id, null));
         }
         this.messages = transformedMessages;
         //subscribing to an Observable so map needs to return something
@@ -50,7 +56,13 @@ export class MessageService{
   }
 
   updateMessage(message: Message){
-    
+    console.log(message.messageId);
+    const body = JSON.stringify(message);
+    const headers = new Headers ({'Content-Type': 'application/json'});
+    //sends up an observable, does not send a request, holds the request
+    return this.http.patch(`/message/${message.messageId}`, body, {headers: headers})
+      .map((response: Response) => response.json())
+      .catch((error: Response) => console.log(error));
   }
 
   deleteMessage(message: Message){

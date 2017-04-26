@@ -43,6 +43,7 @@ router.post('/', function(req, res, next){
 //change existing data
 //put will overwrite existing data
 router.patch('/:id', function(req, res, next){
+  console.log("Hey we tryin' ta update here.")
   Message.findById(req.params.id, function(err, message){
     if (err) {
       return res.status(500).json({
@@ -57,6 +58,8 @@ router.patch('/:id', function(req, res, next){
         error: {message: 'Message not found'}
       })
     }
+
+    //save body content to message content
     message.content = req.body.content;
     message.save(function(err, results){
       if (err) {
@@ -67,7 +70,7 @@ router.patch('/:id', function(req, res, next){
       }
       res.status(200).json({
         message: 'Updated message',
-        obj: result
+        obj: results
       });
     });
   });

@@ -18,6 +18,10 @@ export class MessageInputComponent implements OnInit{
       //Edit
       //this.message is the global array of messages, not changing a copy, changing an actual message
       this.message.content = form.value.content;
+      this.messageService.updateMessage(this.message)
+        .subscribe(
+          result => console.log(result)
+        )
       //clear form
       this.message = null;
     } else {
