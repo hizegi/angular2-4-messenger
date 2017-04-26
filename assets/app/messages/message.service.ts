@@ -66,6 +66,9 @@ export class MessageService{
   }
 
   deleteMessage(message: Message){
-    this.messages.splice(this.messages.indexOf(message), 1)
+    this.messages.splice(this.messages.indexOf(message), 1);
+    return this.http.delete(`/message/${message.messageId}`)
+      .map((response: Response) => response.json())
+      .catch((error: Response) => console.log(error));
   }
 }
