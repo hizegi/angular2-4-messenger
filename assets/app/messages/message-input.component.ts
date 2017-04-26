@@ -23,6 +23,11 @@ export class MessageInputComponent implements OnInit{
     form.resetForm();
   }
 
+  //clear form field on click
+  onClear(form: NgForm){
+    form.reset();
+  }
+
  //call messageService and subscribe to any events that get emitted
   ngOnInit(){
     this.messageService.messageIsEdit.subscribe(
