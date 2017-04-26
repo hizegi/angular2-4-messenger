@@ -14,17 +14,27 @@ export class MessageInputComponent implements OnInit{
   constructor(private messageService: MessageService) {}
 
   onSubmit(form: NgForm){
-    const message = new Message(form.value.content, "Max");
-    this.messageService.addMessage(message)
-      .subscribe(
-        data => console.log(data),
-        error => console.error("Error!", error)
-      );
+    if (this.message){
+      //Edit
+      //this.message is the global array of messages, not changing a copy, changing an actual message
+      this.message.content = form.value.content;
+      //clear form
+      this.message = null;
+    } else {
+      //Creating
+      const message = new Message(form.value.content, "Max");
+      this.messageService.addMessage(message)
+        .subscribe(
+          data => console.log(data),
+          error => console.error("Error!", error)
+        );
+      }
     form.resetForm();
   }
 
   //clear form field on click
   onClear(form: NgForm){
+    this.message = null;
     form.reset();
   }
 

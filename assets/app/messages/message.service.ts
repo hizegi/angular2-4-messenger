@@ -25,6 +25,8 @@ export class MessageService{
      .catch((error: Response) => Observable.throw(error.json()));
   }
 
+
+
   getMessages(){
     return this.http.get('/message')
       .map((response: Response) => {
@@ -45,6 +47,10 @@ export class MessageService{
   //this service acts as a middleman between MessageComponent
   editMessage(message: Message){
     this.messageIsEdit.emit(message);
+  }
+
+  updateMessage(message: Message){
+    
   }
 
   deleteMessage(message: Message){
