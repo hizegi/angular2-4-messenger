@@ -28,7 +28,12 @@ export class MessageService{
       .map((response: Response) => {
         const result = response.json();
         //sent from backend inside "obj"
-        const message = new Message(result.obj.content, 'Dummy', result.obj._id, null);
+        const message = new Message(
+          result.obj.content,
+          result.obj.user.firstName,
+          result.obj._id,
+          result.obj.user._id
+        );
         this.messages.push(message);
         return message;
       })
@@ -44,8 +49,12 @@ export class MessageService{
 
         let transformedMessages: Message[] = [];
         for (let message of messages) {
-          transformedMessages.push(new Message(message.content, 'Dummy', message._id, null));
-        }
+          transformedMessages.push(new Message(
+            message.content,
+            message.user.firstName,
+            message._id,
+            message.user._id)
+          )}
         this.messages = transformedMessages;
         //subscribing to an Observable so map needs to return something
         return transformedMessages;
@@ -67,7 +76,7 @@ export class MessageService{
       ? `?token=${localStorage.getItem('token')}`
       : '';
     //sends up an observable, does not send a request, holds the request
-    return this.http.patch(`/message/${message.messageId}` + token, body, {headers: headers})
+    return this.http.patch(`/message/${message.messageId}${token}`, body, {headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => console.log(error));
   }

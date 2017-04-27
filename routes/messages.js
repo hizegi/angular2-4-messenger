@@ -8,6 +8,7 @@ var User = require('../models/user');
 //retrieve all messages
 router.get('/', function(req, res, next){
   Message.find()
+    .populate('user', 'firstName')
     .exec(function(err, messages){
       if (err) {
         return res.status(500).json({
@@ -79,8 +80,11 @@ router.post('/', function(req, res, next){
 //put will overwrite existing data
 router.patch('/:id', function(req, res, next){
   console.log("Hey we tryin' ta update here.")
+  console.log("Here are patch params", req.params.id)
   var decoded = jwt.decode(req.query.token);
+  console.log(decoded.user._id)
   Message.findById(req.params.id, function(err, message){
+    console.log("FOUND MESSAGE: ", message)
     if (err) {
       return res.status(500).json({
         title: 'An error occured',
@@ -95,7 +99,8 @@ router.patch('/:id', function(req, res, next){
       })
     }
     //check for user id to logged in id
-    if (message.user != decoded.user){
+    if (message.user != decoded.user._id){
+      console.log("ERROR, message.user._id", message.user._id)
       return res.status(401).json({
         title: 'Not Authenticated',
         error: {message: "Users do not match"}
@@ -121,6 +126,9 @@ router.patch('/:id', function(req, res, next){
 router.delete('/:id', function(req, res, next){
   console.log("Deleting okk??");
   var decoded = jwt.decode(req.query.token);
+  console.log("*****************");
+  console.log(decoded);
+
   Message.findById(req.params.id, function(err, message){
     if (err) {
       return res.status(500).json({
@@ -136,7 +144,9 @@ router.delete('/:id', function(req, res, next){
       })
     }
     //check for user id to logged in id
-    if (message.user != decoded.user){
+    if (message.user._id != decoded.user._id){
+      console.log("********Message.user._id*********");
+      console.log(message.user._id)
       return res.status(401).json({
         title: 'Not Authenticated',
         error: {message: "Users do not match"}
