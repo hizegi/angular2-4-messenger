@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit{
   //inject service
   constructor(private authService: AuthService){}
 
-  //create new user from form
+  //create new user from form, order doesn't matter
   onSubmit(){
     const user = new User(
       this.myForm.value.email,

@@ -8,7 +8,7 @@ Backend:
 - Express server
 - MongoDB
 - Handlebars
-- User authentication**
+- User authentication (bcrypt, JWT)**
 - Webpack
 
 Frontend:
