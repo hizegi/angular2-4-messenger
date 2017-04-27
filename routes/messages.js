@@ -144,7 +144,7 @@ router.delete('/:id', function(req, res, next){
       })
     }
     //check for user id to logged in id
-    if (message.user._id != decoded.user._id){
+    if (message.user!= decoded.user._id){
       console.log("********Message.user._id*********");
       console.log(message.user._id)
       return res.status(401).json({
