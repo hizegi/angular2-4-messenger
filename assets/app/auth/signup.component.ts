@@ -8,6 +8,9 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class SignupComponent implements OnInit{
   myForm: FormGroup;
 
+  //inject service
+  constructor(private authService: AuthService){}
+
   onSubmit(){
     console.log(this.myForm);
     this.myForm.reset();
