@@ -25,4 +25,10 @@ export class AuthService{
       .map((response: Response) => response.json())
       .catch((response: Response) => console.log(response));
   }
+
+  //authentication methods here
+  //clear localStorage on logout
+  logout(){
+    localStorage.clear();
+  }
 }
