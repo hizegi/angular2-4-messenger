@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { AuthService } from "./auth/auth.service";
+import { User } from "./user.model";
 
 @Component({
   selector: 'app-signup',
@@ -11,8 +13,19 @@ export class SignupComponent implements OnInit{
   //inject service
   constructor(private authService: AuthService){}
 
+  //create new user from form
   onSubmit(){
-    console.log(this.myForm);
+    const user = new User(
+      this.myForm.value.email,
+      this.myForm.value.password,
+      this.myForm.value.firstName,
+      this.myForm.value.lastName
+    );
+    this.authService.signup(user)
+      .subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      );
     this.myForm.reset();
   }
 
