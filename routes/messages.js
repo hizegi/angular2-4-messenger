@@ -49,7 +49,7 @@ router.post('/', function(req, res, next){
         error: err
       });
     }
-  
+
     //create message
     var message = new Message({
       content: req.body.content,
@@ -141,7 +141,8 @@ router.delete('/:id', function(req, res, next){
         obj: results
       });
     });
+
   });
-});
+}); //end delete
 
 module.exports = router;
