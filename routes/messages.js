@@ -79,6 +79,7 @@ router.post('/', function(req, res, next){
 //put will overwrite existing data
 router.patch('/:id', function(req, res, next){
   console.log("Hey we tryin' ta update here.")
+  var decoded = jwt.decode(req.query.token);
   Message.findById(req.params.id, function(err, message){
     if (err) {
       return res.status(500).json({
@@ -93,7 +94,13 @@ router.patch('/:id', function(req, res, next){
         error: {message: 'Message not found'}
       })
     }
-
+    //check for user id to logged in id
+    if (message.user != decoded.user){
+      return res.status(401).json({
+        title: 'Not Authenticated',
+        error: {message: "Users do not match"}
+      })
+    }
     //save body content to message content
     message.content = req.body.content;
     message.save(function(err, results){
@@ -112,7 +119,8 @@ router.patch('/:id', function(req, res, next){
 });
 
 router.delete('/:id', function(req, res, next){
-  console.log("Deleting okk??")
+  console.log("Deleting okk??");
+  var decoded = jwt.decode(req.query.token);
   Message.findById(req.params.id, function(err, message){
     if (err) {
       return res.status(500).json({
@@ -127,7 +135,13 @@ router.delete('/:id', function(req, res, next){
         error: {message: 'Message not found'}
       })
     }
-
+    //check for user id to logged in id
+    if (message.user != decoded.user){
+      return res.status(401).json({
+        title: 'Not Authenticated',
+        error: {message: "Users do not match"}
+      })
+    }
     //Delete message
     message.remove(function(err, results){
       if (err) {
