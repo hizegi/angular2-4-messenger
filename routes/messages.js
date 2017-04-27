@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require ('jsonwebtoken');
 
 var Message = require('../models/message');
 
@@ -19,6 +20,22 @@ router.get('/', function(req, res, next){
       });
     })
 });
+
+//check if client issues valid token via query
+router.use('/', function(req, res, next){
+  jwt.verify(req.query.token, 'secretkeywahoo', function(err, decoded){
+    if (err){
+      return res.status(401).json({
+        title: 'Not Authenticated',
+        error: err
+      });
+    }
+    //if no error keep going
+    next();
+  });
+});
+
+
 
 //post new message
 router.post('/', function(req, res, next){

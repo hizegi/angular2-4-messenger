@@ -8,7 +8,7 @@ Backend:
 - Express server
 - MongoDB
 - Handlebars
-- User authentication (bcrypt, JWT)**
+- User authentication (bcrypt, JWT, localStorage)
 - Webpack
 
 Frontend:
@@ -16,12 +16,10 @@ Frontend:
 - Angular 2 (technically 4)
 - Bootstrap for styling
 
-** still in development
-
 ## Angular 2 / 4 Features used:
 - Typescript (duh?)
 - Custom models (user, message)
-- Custom service (messages)
+- Custom services (authentication, messages)
 - Routing and child routes
 - Form (ReactiveFormsModule)
 - Http requests with Observables

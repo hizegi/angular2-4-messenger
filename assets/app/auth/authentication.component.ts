@@ -22,6 +22,7 @@ export class AuthenticationComponent{
   //inject Auth Service
   constructor(private authService: AuthService){}
 
+  //to do: stronger token validations
   isLoggedIn(){
     return this.authService.isLoggedIn();
   }
