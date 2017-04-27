@@ -49,30 +49,30 @@ router.post('/', function(req, res, next){
         error: err
       });
     }
-  });
+  
+    //create message
+    var message = new Message({
+      content: req.body.content,
+      user: user
+    });
 
-  //create message
-  var message = new Message({
-    content: req.body.content,
-    user: user
-  });
-
-  //save message
-  message.save(function(err, result){
-    if (err) {
-      return res.status(500).json({
-        title: 'An error occured',
-        error: err
-      })
-    }
-    //save to user and save user
-    user.messages.push(result);
-    user.save();
-    res.status(201).json({
-      message: 'Saved message',
-      obj: result
-    })
-  });
+    //save message
+    message.save(function(err, result){
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occured',
+          error: err
+        })
+      }
+      //save to user and save user
+      user.messages.push(result);
+      user.save();
+      res.status(201).json({
+        message: 'Saved message',
+        obj: result
+      });
+    }); //end save message
+  });//end find User
 });
 
 //change existing data

@@ -15,12 +15,16 @@ export class MessageService{
   //only able to inject services into classes which have some form of metadeta attached to them
   constructor(private http: Http) {}
 
+  //POST with token in query
   addMessage(message: Message){
     //this.messages.push(message);
     const body = JSON.stringify(message);
     const headers = new Headers ({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token')
+      ? `?token=${localStorage.getItem('token')}`
+      : '';
     //sends up an observable, does not send a request, holds the request
-    return this.http.post('http://localhost:3000/message', body, {headers: headers})
+    return this.http.post('http://localhost:3000/message' + token, body, {headers: headers})
       .map((response: Response) => {
         const result = response.json();
         //sent from backend inside "obj"
@@ -59,8 +63,11 @@ export class MessageService{
     console.log(message.messageId);
     const body = JSON.stringify(message);
     const headers = new Headers ({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token')
+      ? `?token=${localStorage.getItem('token')}`
+      : '';
     //sends up an observable, does not send a request, holds the request
-    return this.http.patch(`/message/${message.messageId}`, body, {headers: headers})
+    return this.http.patch(`/message/${message.messageId}` + token, body, {headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => console.log(error));
   }
