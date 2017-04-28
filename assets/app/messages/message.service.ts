@@ -46,7 +46,6 @@ export class MessageService{
   getMessages(){
     return this.http.get('/message')
       .map((response: Response) => {
-        console.log("RESPONSE", response);
         const messages = response.json().obj;
         let transformedMessages: Message[] = [];
         for (let message of messages) {
@@ -59,7 +58,6 @@ export class MessageService{
           console.log("EACH MESSAGE", message);
         }
         this.messages = transformedMessages;
-        console.log("THESE MESSAGEs", this.messages);
         //subscribing to an Observable so map needs to return something
         return transformedMessages;
       })
@@ -73,7 +71,6 @@ export class MessageService{
   }
 
   updateMessage(message: Message){
-    console.log(message.messageId);
     const body = JSON.stringify(message);
     const headers = new Headers ({'Content-Type': 'application/json'});
     const token = localStorage.getItem('token')
