@@ -55,7 +55,6 @@ export class MessageService{
             message._id,
             message.user._id
           );
-          console.log("EACH MESSAGE", message);
         }
         this.messages = transformedMessages;
         //subscribing to an Observable so map needs to return something
