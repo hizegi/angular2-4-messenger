@@ -15,6 +15,7 @@ export class MessageInputComponent implements OnInit{
 
   onSubmit(form: NgForm){
     if (this.message){
+      console.log("NEW MESSAGE: ", this.message)
       //Edit
       //this.message is the global array of messages, not changing a copy, changing an actual message
       this.message.content = form.value.content;

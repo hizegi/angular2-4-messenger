@@ -8,6 +8,6 @@ export class Message {
     this.content = content;
     this.username = username;
     this.messageId = messageId;
-    this.userId: userId;
+    this.userId = userId;
   }
 }

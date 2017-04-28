@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class MessageService{
   private messages: Message[] = [];
 
+
   //this will emit an Message object
   messageIsEdit = new EventEmitter<Message>;
 
@@ -45,17 +46,20 @@ export class MessageService{
   getMessages(){
     return this.http.get('/message')
       .map((response: Response) => {
+        console.log("RESPONSE", response);
         const messages = response.json().obj;
-
         let transformedMessages: Message[] = [];
         for (let message of messages) {
           transformedMessages.push(new Message(
             message.content,
             message.user.firstName,
             message._id,
-            message.user._id)
-          )}
+            message.user._id
+          );
+          console.log("EACH MESSAGE", message);
+        }
         this.messages = transformedMessages;
+        console.log("THESE MESSAGEs", this.messages);
         //subscribing to an Observable so map needs to return something
         return transformedMessages;
       })

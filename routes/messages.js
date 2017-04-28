@@ -20,6 +20,7 @@ router.get('/', function(req, res, next){
         message: 'Success',
         obj: messages
       });
+      console.log("MESSAGES", messages);
     })
 });
 
