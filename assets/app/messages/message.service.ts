@@ -40,7 +40,8 @@ export class MessageService{
         return message;
       })
      .catch((error: Response) => {
-        return Observable.throw(error.json())
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
      });
   }
 
@@ -63,6 +64,10 @@ export class MessageService{
         //subscribing to an Observable so map needs to return something
         return transformedMessages;
       })
+      .catch((error: Response) => {
+         this.errorService.handleError(error.json());
+         return Observable.throw(error.json());
+      });
     //  .catch((error: Response) => Observable.throw(error.json()));
   }
 
@@ -81,7 +86,10 @@ export class MessageService{
     //sends up an observable, does not send a request, holds the request
     return this.http.patch(`/message/${message.messageId}${token}`, body, {headers: headers})
       .map((response: Response) => response.json())
-      .catch((error: Response) => console.log(error));
+      .catch((error: Response) => {
+         this.errorService.handleError(error.json());
+         return Observable.throw(error.json());
+      });
   }
 
   deleteMessage(message: Message){
@@ -91,6 +99,9 @@ export class MessageService{
       : '';
     return this.http.delete(`/message/${message.messageId}${token}`)
       .map((response: Response) => response.json())
-      .catch((error: Response) => console.log(error));
+      .catch((error: Response) => {
+         this.errorService.handleError(error.json());
+         return Observable.throw(error.json());
+      });
   }
 }
