@@ -17,5 +17,9 @@ import { Error } from "./error.model";
 })
 export class ErrorComponent{
   error: Error
-  displayed = 'none';
+  display = 'none';
+
+  onErrorHandled(){
+    this.display = 'none';
+  }
 }
