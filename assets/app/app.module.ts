@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from "./app.component";
 import { AuthenticationComponent } from "./auth/authentication.component";
 import { HeaderComponent } from "./header.component";
@@ -19,15 +18,11 @@ import { MessageModule } from "./messages/message.module";
         AppComponent,
         AuthenticationComponent,
         HeaderComponent,
-        LogoutComponent,
-        SignupComponent,
-        SigninComponent,
         ErrorComponent
     ],
     imports: [
       BrowserModule,
       routing,
-      ReactiveFormsModule,
       HttpModule,
       MessageModule
     ],
