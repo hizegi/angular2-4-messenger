@@ -39,7 +39,9 @@ export class MessageService{
         this.messages.push(message);
         return message;
       })
-     .catch((error: Response) => console.log(error));
+     .catch((error: Response) => {
+        return Observable.throw(error.json())
+     });
   }
 
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Error } from "./error.model";
+import { ErrorService } from "./error.service";
 
 @Component({
   selector: 'app-error',
@@ -19,7 +20,7 @@ export class ErrorComponent{
   error: Error;
   display = 'none';
 
-  constructor(private errorService: ErrorService)
+  constructor(private errorService: ErrorService){}
 
   onErrorHandled(){
     this.display = 'none';
