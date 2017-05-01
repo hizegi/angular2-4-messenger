@@ -16,7 +16,7 @@ import { ErrorService } from "./error.service";
     }
     `]
 })
-export class ErrorComponent{
+export class ErrorComponent implements OnInit{
   error: Error;
   display = 'none';
 
