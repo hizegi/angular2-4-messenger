@@ -4,6 +4,7 @@ import { Injectable, EventEmitter } from "@angular/core";
 import { Message } from "./message.model";
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
+import { ErrorService } from "../errors/error.service";
 
 @Injectable()
 export class MessageService{
@@ -14,7 +15,7 @@ export class MessageService{
   messageIsEdit = new EventEmitter<Message>;
 
   //only able to inject services into classes which have some form of metadeta attached to them
-  constructor(private http: Http) {}
+  constructor(private http: Http, private errorService: ErrorService) {}
 
   //POST with token in query
   addMessage(message: Message){
