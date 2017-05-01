@@ -16,7 +16,7 @@ import { Error } from "./error.model";
     `]
 })
 export class ErrorComponent{
-  error: Error
+  error: Error;
   display = 'none';
 
   onErrorHandled(){
